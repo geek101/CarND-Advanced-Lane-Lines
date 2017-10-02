@@ -11,19 +11,17 @@
 [image6]: ./examples/comb_rs_grads_region.png "Region to reduce clutter"
 [image7]: ./examples/orig_wrap_test.png "Image prespective transform test"
 [image8]: ./examples/bird_to_undist.png "Birds eyeview lane detection"
-[video1]: ./output_videos/project_video.mp4 "Video"
+[video1]: ./output_videos/project_video.mp4 "Project Video with lane detection"
 
 ---
 
 ### Writeup / README
 
-#### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  [Here](https://github.com/udacity/CarND-Advanced-Lane-Lines/blob/master/writeup_template.md) is a template writeup for this project you can use as a guide and a starting point.  
-
-You're reading it!
+You're reading it!, you can also find it [here](https://github.com/geek101/CarND-Advanced-Lane-Lines/blob/master/README.md)
 
 ### Camera Calibration
 
-The code for this step is contained in the first code cell of the IPython notebook located in "./examples/example.ipynb" (or in lines # through # of the file called `some_file.py`).  
+The code for this step is contained in the third code cell of the IPython notebook located [here](https://github.com/geek101/CarND-Advanced-Lane-Lines/blob/master/advanced_lane_finding.ipynb) .  
 
 I start by preparing "object points", which will be the (x, y, z) coordinates of the chessboard corners in the world. Here I am assuming the chessboard is fixed on the (x, y) plane at z=0, such that the object points are the same for each calibration image.  Thus, `objp` is just a replicated array of coordinates, and `objpoints` will be appended with a copy of it every time I successfully detect all chessboard corners in a test image.  `imgpoints` will be appended with the (x, y) pixel position of each of the corners in the image plane with each successful chessboard detection.  
 
@@ -42,7 +40,7 @@ I have noticed that both red channel in an rgb image and saturation channel of a
 
 #### 2. Gradients are applied for both the red channel image and the saturation channel image seperately and they are combined.
 
-I used a combination of color and gradient thresholds to generate a binary image (thresholding steps at lines # through # in `another_file.py`).  Here's an example of my output for this step.  (note: this is not actually from one of the test images)
+I used a combination of color and gradient thresholds to generate a binary image (thresholding can be found in code cell 12).  Here's an example of my output for this step.
 
 Red channel gradients
 ![alt text][image3]
@@ -58,7 +56,7 @@ Applying a region filter so as to help with lane detection:
 
 #### 3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
 
-The code for my perspective transform includes a function called `warper()`, which appears in lines 1 through 8 in the file `example.py` (output_images/examples/example.py) (or, for example, in the 3rd code cell of the IPython notebook).  The `warper()` function takes as inputs an image (`img`), as well as source (`src`) and destination (`dst`) points.  I chose the hardcode the source and destination points in the following manner:
+The code for my perspective transform includes a function called `warp()`, which appears in code cell 9.  The `warp()` function takes as inputs an image (`img`), as well as source (`src`) and destination (`dst`) points.  I chose the hardcode the source and destination points in the following manner:
 
 ```python
 # Prespective transform
@@ -89,17 +87,13 @@ I verified that my perspective transform was working as expected by drawing the 
 
 #### 4. Lane line identification
 
-I ran sliding window lane detection on the thresholded images with margin of window set to 50 and minimum number of pixel detection in window set to 35, the following shows the detection on the above warped image.
+I ran sliding window lane detection (cell 16) on the thresholded images with margin of window set to 50 and minimum number of pixel detection in window set to 35, the following shows the detection on the above warped image.
 
 ![alt text][image8]
 
 #### 5. Radius of curvature and offset from center calculation.
 
-I did this in lines # through # in my code in `my_other_file.py`
-
-#### 6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
-
-I implemented this step in lines # through # in my code in `yet_another_file.py` in the function `get_curvature()`.  
+I did this in code cell 16. 
 
 ```python
 def get_curvature(leftx, lefty, rightx, righty):
@@ -135,4 +129,6 @@ Here's a [link to my video result](./output_videos/project_video.mp4)
 
 ### Discussion
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+This project has definitely been challenging. It seems quite straight forward to make this work for the given "project_video.mp4", however it is quite challenging to make it work for the more difficult videos presented in the project.
+
+I need to make the sliding window more robust so as to detect lanes and not pick up invalid gradients. Even with adding more complexity to sliding window it seems like the algorithm can be defeated quite easily with more challenging cases.
